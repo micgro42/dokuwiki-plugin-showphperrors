@@ -31,8 +31,18 @@ class action_plugin_showphperrors extends DokuWiki_Action_Plugin {
      *                           handler was registered]
      * @return void
      */
-
     public function handle_dokuwiki_started(Doku_Event &$event, $param) {
+        $errorsToReport = error_reporting();
+        if ($this->getConf('deprecated')) {
+            $errorsToReport |= E_DEPRECATED;
+        }
+        if ($this->getConf('strict')) {
+            $errorsToReport |= E_STRICT;
+        }
+        if ($this->getConf('notices')) {
+            $errorsToReport |= E_NOTICE;
+        }
+        error_reporting($errorsToReport);
         ini_set('display_errors', 1);
     }
 
