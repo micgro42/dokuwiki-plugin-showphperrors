@@ -43,7 +43,7 @@ class action_plugin_showphperrors extends DokuWiki_Action_Plugin {
             $errorsToReport |= E_NOTICE;
         }
         error_reporting($errorsToReport);
-        ini_set('display_errors', 1);
+        ini_set('display_errors', $this->getConf('showphperros'));
     }
 
 }
