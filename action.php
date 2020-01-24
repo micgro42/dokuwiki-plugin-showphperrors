@@ -15,18 +15,18 @@ class action_plugin_showphperrors extends DokuWiki_Action_Plugin {
      * @return void
      */
     public function register(Doku_Event_Handler $controller) {
-       $controller->register_hook('INIT_LANG_LOAD', 'AFTER', $this, 'handle_dokuwiki_started');
+       $controller->register_hook('INIT_LANG_LOAD', 'AFTER', $this, 'adjustErrorReporting');
     }
 
     /**
-     * [Custom event handler which performs action]
+     * Handles the event INIT_LANG_LOAD
      *
      * @param Doku_Event $event  event object by reference
      * @param mixed      $param  [the parameters passed as fifth argument to register_hook() when this
      *                           handler was registered]
      * @return void
      */
-    public function handle_dokuwiki_started(Doku_Event &$event, $param) {
+    public function adjustErrorReporting(Doku_Event $event, $param) {
         $errorsToReport = error_reporting();
         if ($this->getConf('deprecated')) {
             $errorsToReport |= E_DEPRECATED;
